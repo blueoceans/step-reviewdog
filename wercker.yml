@@ -1,8 +1,10 @@
-box: golang
+box: wercker/golang
 
 build:
     steps:
         - shellcheck
+
+        - setup-go-workspace@1.0.4
 
         - script:
             name: fetch golint
@@ -26,8 +28,3 @@ build:
     after-steps:
         - slack-notifier:
             url: $SLACK_URL
-
-publish:
-  steps:
-    - internal/publish-step:
-        owner: blueoceans
