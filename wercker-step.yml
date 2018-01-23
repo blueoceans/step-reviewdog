@@ -1,0 +1,7 @@
+name: reviewdog
+version: 1.0.0
+description: Step to run reviewdog
+keywords:
+  - golang
+  - golint
+  - reviewdog
