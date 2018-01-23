@@ -1,0 +1,33 @@
+box: golang
+
+build:
+    steps:
+        - shellcheck
+
+        - script:
+            name: fetch golint
+            code: go get github.com/golang/lint/golint
+
+        - script:
+            name: fetch reviewdog
+            code: go get github.com/haya14busa/reviewdog/cmd/reviewdog
+
+        - script:
+            name: prepare output
+            code: |
+                mv $GOPATH/bin/golint $WERCKER_ROOT/golint
+                mv $GOPATH/bin/reviewdog $WERCKER_ROOT/reviewdog
+
+        - script:
+            name: prune
+            code: |
+                rm -rf $WERCKER_ROOT/.git
+                rm $WERCKER_ROOT/.gitignore
+    after-steps:
+        - slack-notifier:
+            url: $SLACK_URL
+
+publish:
+  steps:
+    - internal/publish-step:
+        owner: blueoceans
